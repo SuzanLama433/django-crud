@@ -1,59 +1,50 @@
 {% extends 'base.html' %}
-{% load static %}
-
-{% block title %}
-result
-{% endblock title %}
-
-{% block content %}
+{% load static %} {% block title %} result
+{% endblock title %} {% block content %}
 <!-- show the result here  -->
 <section>
-    <div class="container">
-        <div class="row">
-            <div class="col-10 mx-auto my-3 alert alert-info">
-                <h1 class="text-center">View Result</h1>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">img</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Age</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">message</th>
-                            <th scope="col">DOB</th>
+  <div class="container">
+    <div class="row">
+      <div class="col-10 mx-auto my-3 alert alert-info">
+        <h1 class="text-center">View Result</h1>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">img</th>
+              <th scope="col">Name</th>
+              <th scope="col">Age</th>
+              <th scope="col">Email</th>
+              <th scope="col">message</th>
+              <th scope="col">DOB</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in data %}
+            <tr>
+              <th scope="row">{{i.id}}</th>
+              <td>
+                {% if i.image %}
+                <img class="rounded-circle" src="{{i.image.url}}" alt="" height="60px" width="60px" />
 
+                {% else %}
+                <p>No images</p>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        {% for i in data  %}
-                        <tr>
-                            <th scope="row">{{i.id}}</th>
-                            <td>
-                                {% if i.image %}
-                                <img class="rounded-circle" src="{{i.image.url}}" alt="" height="60px" width="60px">
-
-                                {% else %}
-                                <p>No images</p>
-
-                                {% endif %}
-                            </td>
-                            <td>{{i.name}}</td>
-                            <td>{{i.age}}</td>
-                            <td>{{i.email}}</td>
-                            <td>{{i.message}}</td>
-                            <td>{{i.dob}}</td>
-
-                        </tr>
-                        {% empty %}
-                        <p class="alert alert-danger text-center">No Items</p>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                {% endif %}
+              </td>
+              <td>{{i.name}}</td>
+              <td>{{i.age}}</td>
+              <td>{{i.email}}</td>
+              <td>{{i.message}}</td>
+              <td>{{i.dob}}</td>
+            </tr>
+            {% empty %}
+            <p class="alert alert-danger text-center">No Items</p>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
 </section>
 {% endblock content %}
