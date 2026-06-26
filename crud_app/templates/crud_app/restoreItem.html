@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %} {% block title %} result
+{% endblock title %} {% block content %}
+
+<!-- show the result here  -->
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mx-auto my-1 alert alert-info">
+                <h1 class="text-center">View Result</h1>
+                <table class="table table-striped" id="myTable">
+                    <thead>
+                        <tr>
+                            <th scope="col">S.N</th>
+                            <th scope="col">img</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">message</th>
+                            <th scope="col">DOB</th>
+                            <th scope="='col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in data %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>
+                                {% if i.image %}
+                                <img class="rounded-circle" src="{{i.image.url}}" alt="" height="60px" width="60px" />
+
+                                {% else %}
+                                <p>No images</p>
+
+                                {% endif %}
+                            </td>
+                            <td>{{i.name}}</td>
+                            <td>{{i.age}}</td>
+                            <td>{{i.email}}</td>
+                            <td>{{i.message}}</td>
+                            <td>{{i.dob}}</td>
+                            <th>
+                                <a href="{% url 'restoreItem' i.id %}"><button class="btn btn-primary"><i
+                                            class="fa-solid fa-arrow-rotate-right"></i> Restore
+                                    </button></a>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#permanentDeleteModal" data-id="{{ i.id }}"
+                                    data-name="{{ i.name }}"><i class="fa-solid fa-trash"></i>
+                                    Delete</button>
+                            </th>
+                        </tr>
+                        {% empty %}
+                        <p class=" alert alert-danger text-center">No Items</p>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                    data-bs-target="#permanentDeleteAllModal"><i class="fa-solid fa-trash"></i>
+                    Delete all permanently</button>
+
+            </div>
+            <a href="{% url 'show' %}"> <button class="btn btn-danger" type="submit"><i
+                        class="fa-solid fa-arrow-left"></i>
+                    Back to result</button></a>
+        </div>
+    </div>
+</section>
+<!-- delete modal -->
+<div class="modal fade" id="permanentDeleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Record</h5>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <div class="modal-body">
+                Are you sure you want to delete
+                <strong id="deleteName"></strong>?
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <a id="permanentDeleteBtn" href="#" class="btn btn-danger">
+                    Delete permanently
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- delete all -->
+<div class="modal fade" id="permanentDeleteAllModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Record</h5>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <div class="modal-body">
+                Are you sure you want to delete
+                <strong id="deleteAllName"></strong>?
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <a id="permanentAllDeleteBtn" href="#" class="btn btn-danger">
+                    Delete permanently
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    let table = new DataTable('#myTable');
+</script>
+{% endblock content %}

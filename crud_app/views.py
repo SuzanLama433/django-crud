@@ -62,3 +62,25 @@ def edit(request,id):
          data.save()
          return redirect('show')
     return render(request,'crud_app/edit.html',{'data':data})
+
+def restoreItem(request):
+   data = Students.objects.filter(is_delete=True)
+   return render(request,'crud_app/restoreItem.html',{'data':data})
+
+def restore_data(request,id):
+    data = Students.objects.get(id=id)
+    data.is_delete = False
+    data.save()
+    return redirect('restore')
+
+def delete_permanent(request,id):
+    data = Students.objects.get(id=id)
+    data.delete()
+    return redirect('restore')
+     
+def delete_all(request):
+    data = Students.objects.filter(is_delete = True)
+    # data.update(is_delete=False) 
+    data.delete() #permanent delete
+    return redirect('restore')
+    
