@@ -29,7 +29,7 @@ def form(request):
 
 # show result of form
 def show(request):
-    data = Students.objects.all()
+    data = Students.objects.filter(is_delete = False)
     return render(request, "crud_app/result.html", {"data": data})
 
 
@@ -39,3 +39,26 @@ def about(request):
 
 def contact(request):
     return render(request, "crud_app/contact.html")
+
+def delete_data(request,id):
+    data = Students.objects.get(id=id)
+    data.is_delete=True
+    data.save()
+    return redirect('show')
+
+def edit(request,id):
+    data = Students.objects.get(id=id)
+    if request.method == "POST" or request.FILES:
+
+         data = Students.objects.get(id=id)
+         data.name =request.POST["name"]
+         data.age =request.POST["age"]
+         data.email = request.POST["email"]
+         data.message = request.POST["message"]
+         dob = request.POST["dob"]
+         image =  request.FILES.get("image")
+         if image:
+             data.image = image
+         data.save()
+         return redirect('show')
+    return render(request,'crud_app/edit.html',{'data':data})

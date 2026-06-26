@@ -8,6 +8,7 @@ class Students(models.Model):
     message = models.TextField()
     dob = models.DateField()
     image = models.ImageField(upload_to='images/',null=True)
+    is_delete = models.BooleanField(default=False)
     
     def __str__(self):
         return self.name
